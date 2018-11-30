@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="colorPrimary">@color/newBackgroundColor</item>
+    <item name="colorPrimaryDark">@color/newBackgroundColor</item>
+    <color name="newBackgroundColor">#000000</color>
+</resources>
