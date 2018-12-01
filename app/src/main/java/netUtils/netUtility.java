@@ -5,24 +5,24 @@ import android.graphics.Movie;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
-
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import uoit.ca.movieapp.MyMovie;
+
 public class netUtility {
 
     private static final String TAG = netUtility.class.getSimpleName();
 
-    public static ArrayList<Movie> fetchData(String url) throws IOException {
-        ArrayList<Movie> movies = new ArrayList<Movie>();
+    public static ArrayList<MyMovie> fetchData(String url) throws IOException {
+        ArrayList<MyMovie> movies = new ArrayList<MyMovie>();
         try {
 
             URL new_url = new URL(url); //create a url from a String
@@ -39,7 +39,7 @@ public class netUtility {
         }
         return movies;
     }
-    public static void parseJson(String data, ArrayList<Movie> list){
+    public static void parseJson(String data, ArrayList<MyMovie> list){
 
         try {
             JSONObject mainObject = new JSONObject(data);
@@ -47,8 +47,8 @@ public class netUtility {
             JSONArray resArray = mainObject.getJSONArray("results"); //Getting the results object
             for (int i = 0; i < resArray.length(); i++) {
                 JSONObject jsonObject = resArray.getJSONObject(i);
-                Movie movie = new Movie(); //New Movie object
-                movie.setID(jsonObject.getInt("id"));
+                MyMovie movie = new MyMovie(); //New MyMovie object
+                movie.setId(jsonObject.getInt("id"));
                 movie.setVoteAverage(jsonObject.getInt("vote_average"));
                 movie.setVoteCount(jsonObject.getInt("vote_count"));
                 movie.setOriginalTitle(jsonObject.getString("original_title"));

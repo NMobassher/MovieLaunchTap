@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="colorPrimary">@color/newBackgroundColor</item>
-    <item name="colorPrimaryDark">@color/newBackgroundColor</item>
-    <color name="newBackgroundColor">#000000</color>
+    <!-- <color name="colorPrimary">#008577</color> -->
+    <!--  <color name="colorPrimaryDark">#00574B</color> -->
+
+    <!-- This is the color of the top bar with the app title on it -->
+    <color name="colorPrimary">#008577</color>
+
+    <!-- This is the color of the user's very top bar with their battery percentage and clock on it -->
+    <color name="colorPrimaryDark">#000000</color>
+
+    <color name="colorAccent">#D81B60</color>
 </resources>
