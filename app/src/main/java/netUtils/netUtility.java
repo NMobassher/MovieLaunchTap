@@ -19,10 +19,30 @@ import uoit.ca.movieapp.MyMovie;
 
 public class netUtility {
 
+    public static ArrayList<MyMovie> movies = new ArrayList<MyMovie>();
+
+    /* Default values for testing*/
+    public static MyMovie m1 = new MyMovie();
+    public static MyMovie m2 = new MyMovie();
+    public static MyMovie m3 = new MyMovie();
+    public static MyMovie m4 = new MyMovie();
+    public static MyMovie m5 = new MyMovie();
+    public static MyMovie m6 = new MyMovie();
+    public static MyMovie m7 = new MyMovie();
+    public static MyMovie m8 = new MyMovie();
+    public static MyMovie m9 = new MyMovie();
+    public static MyMovie m10 = new MyMovie();
+    public static MyMovie m11 = new MyMovie();
+    public static MyMovie m12 = new MyMovie();
+
     private static final String TAG = netUtility.class.getSimpleName();
 
     public static ArrayList<MyMovie> fetchData(String url) throws IOException {
-        ArrayList<MyMovie> movies = new ArrayList<MyMovie>();
+        movies.add(m1);
+        movies.add(m2);
+        movies.add(m3);
+
+
         try {
 
             URL new_url = new URL(url); //create a url from a String
@@ -48,16 +68,13 @@ public class netUtility {
             for (int i = 0; i < resArray.length(); i++) {
                 JSONObject jsonObject = resArray.getJSONObject(i);
                 MyMovie movie = new MyMovie(); //New MyMovie object
-                movie.setId(jsonObject.getInt("id"));
-                movie.setVoteAverage(jsonObject.getInt("vote_average"));
-                movie.setVoteCount(jsonObject.getInt("vote_count"));
-                movie.setOriginalTitle(jsonObject.getString("original_title"));
-                movie.setTitle(jsonObject.getString("title"));
-                movie.setPopularity(jsonObject.getDouble("popularity"));
-                movie.setBackdropPath(jsonObject.getString("backdrop_path"));
-                movie.setOverview(jsonObject.getString("overview"));
-                movie.setReleaseDate(jsonObject.getString("release_date"));
-                movie.setPosterPath(jsonObject.getString("poster_path"));
+                movie.setId(jsonObject.getInt("imdbID"));
+                movie.setimdbRating(jsonObject.getInt("imdbRating"));
+                movie.setimdbVotes(jsonObject.getInt("imdbVotes"));
+                movie.setTitle(jsonObject.getString("Title"));
+                movie.setPlot(jsonObject.getString("Plot"));
+                movie.setReleased(jsonObject.getString("Released"));
+                movie.setPoster(jsonObject.getString("Poster"));
                 //Adding a new movie object into ArrayList
                 list.add(movie);
             }

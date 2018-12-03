@@ -8,6 +8,16 @@ import java.util.ArrayList;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.squareup.picasso.Picasso;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MovieAdapter extends BaseAdapter {
 
@@ -17,6 +27,7 @@ public class MovieAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<MyMovie> list;
     public static final String MOVIE_BASE_URL = "https://image.tmdb.org/t/p/w185";
+    ImageView imageView;
 
     public MovieAdapter(Context context, ArrayList<MyMovie> myMovieList) {
         this.mContext = context;
@@ -43,7 +54,7 @@ public class MovieAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
+
         MyMovie movies = getItem(position);
         RelativeLayout relativeLayout = new RelativeLayout(mContext);
         relativeLayout.setLayoutParams(new ViewGroup.LayoutParams(200, 300));
