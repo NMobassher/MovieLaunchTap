@@ -1,13 +1,19 @@
 package uoit.ca.movieapp;
 
+import android.app.ActionBar;
+import android.app.ListActivity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ProgressBar;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView;
@@ -18,6 +24,18 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,123 +43,101 @@ import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import netUtils.netUtility;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+
 
 public class MovieActivity extends AppCompatActivity {
 
     /* Fields */
 
+
+    private final static String API_KEY = "cf5752d327722bc19692de615b556a6f";
+
+    public static String title;
+    public static String year;
+    SimpleCursorAdapter mAdapter;
+
+    //static final String[] PROJECTION = new String[] {title, year};
+
+
     String popularMoviesURL;
-    //@BindView(R.id.indeterminateBar)
     ProgressBar mProgressBar;
-    // GridView gridView;
     ArrayList<MyMovie> myMovieList;
-    ArrayList<String> listItems = new ArrayList<String>();
-    ArrayAdapter<String> adapter;
+
+
     ArrayList<MyMovie> mPopularList;
     ListView listView;
     String[] test;
+    MovieInterface movieInterface;
+
+    /* Refined */
+
+    public List<Movie> films;
+    public Context context;
+    List<Movie> movies;
+    /* URL of website data is from*/
+    ArrayList<String> listItems = new ArrayList<String>();
+    ArrayAdapter<String> adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
+        listView = (ListView) findViewById(R.id.listView);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItems);
+        listView.setAdapter(adapter);
+
 
         /* Initialize variables*/
 
-        listView = (ListView) findViewById(R.id.listView);
-        test = new String[]{};
 
-        /* Movie gathering code */
+//        for (int i = 0; i < movies.size(); i++) {
+//            testList.add(movies.get(i).getTitle());
+//
+//        }
+//
+        /* Warn user if key is empty*/
+
+        if (API_KEY.isEmpty()) {
+
+            Toast.makeText(getApplicationContext(), "Error with API key. Unintended behavior may occur", Toast.LENGTH_LONG).show();
+
+        }
+
+        /* Code to get movies*/
 
 
-        ButterKnife.bind(this);
-//        mProgressBar.setVisibility(View.INVISIBLE); //Hide Progressbar by Default
-//        mProgressBar.setVisibility(View.INVISIBLE); //Hide Progressbar by Default
-        new FetchMovies().execute();
-//        gridView = (GridView) findViewById(R.id.pop_movies_grid);
-//        gridView.setAdapter(new MovieAdapter(this,myMovieList));
-//        gridView.setOnItemClickListener(new OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View v,
-//                                    int position, long id) {
-//                Toast.makeText(MovieActivity.this, "" + position,
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        movieInterface = TMDb.getClient().create(MovieInterface.class);
+
+        Call<MovieResponse> call = movieInterface.getTopRatedMovies(API_KEY);
+        call.enqueue(new Callback<MovieResponse>() {
+            @Override
+            public void onResponse(Call<MovieResponse> call, retrofit2.Response<MovieResponse> response) {
+                List<Movie> movies = response.body().getResults();
+
+                Toast.makeText(getApplicationContext(), "Got data", Toast.LENGTH_LONG).show();
+
+                for (int i = 0; i < movies.size(); i++) {
+                    listItems.add(movies.get(i).getTitle());
+                }
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onFailure(Call<MovieResponse> call, Throwable throwable) {
+                Toast.makeText(getApplicationContext(), "Serious Issue", Toast.LENGTH_LONG).show();
+            }
+        });
+
 
         /* UI display code*/
 
-        final List<String> testList = new ArrayList<String>(Arrays.asList(test));
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, testList);
-        listView.setAdapter(arrayAdapter);
-
-
-        /* Iterate through movie list and print their titles*/
-
-        for (int i = 0; i < netUtility.movies.size(); i++) {
-            testList.add(netUtility.movies.get(i).getTitle());
-        }
-//        netUtility.movies.add(netUtility.m1);
-//        netUtility.movies.add(netUtility.m2);
-//        netUtility.movies.add(netUtility.m3);
-//        netUtility.movies.add(netUtility.m4);
-//        netUtility.movies.add(netUtility.m5);
-//        netUtility.movies.add(netUtility.m6);
-//        netUtility.movies.add(netUtility.m7);
-//        netUtility.movies.add(netUtility.m8);
-//        netUtility.movies.add(netUtility.m9);
-//        netUtility.movies.add(netUtility.m10);
-//        netUtility.movies.add(netUtility.m11);
-//        netUtility.movies.add(netUtility.m12);
-
-
-        /* Print title of first 12 movies */
-        testList.add(netUtility.movies.get(1).getTitle());
-        testList.add(netUtility.movies.get(2).getTitle());
-        testList.add(netUtility.movies.get(3).getTitle());
-        testList.add(netUtility.movies.get(4).getTitle());
-        testList.add(netUtility.movies.get(5).getTitle());
-        testList.add(netUtility.movies.get(6).getTitle());
-        testList.add(netUtility.movies.get(7).getTitle());
-        testList.add(netUtility.movies.get(8).getTitle());
-        testList.add(netUtility.movies.get(9).getTitle());
-        testList.add(netUtility.movies.get(10).getTitle());
-        testList.add(netUtility.movies.get(11).getTitle());
 
     }
 
-    public class FetchMovies extends AsyncTask<Void, Void, Void> {
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-//            mProgressBar.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            popularMoviesURL = "https://api.themoviedb.org/3/movie/550?api_key=4f809abf854213ca4ff8e365ebe62359";
-
-            Looper.prepare();
-            try {
-                if (netUtility.networkStatus(MovieActivity.this)) {
-                    mPopularList = netUtility.fetchData(popularMoviesURL); //Get popular movies
-
-                } else {
-                    Toast.makeText(MovieActivity.this, "No Internet Connection", Toast.LENGTH_LONG).show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void s) {
-            super.onPostExecute(s);
-            // mProgressBar.setVisibility(View.INVISIBLE);
-        }
-    }
 }

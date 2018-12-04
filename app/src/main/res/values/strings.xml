@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MovieLaunchApp</string>
+    <string name="app_name">MovieLaunchTap</string>
     <string name="title_activity_home_page">MovieLaunchApp</string>
     <string name="navigation_drawer_open">Open side bar</string>
     <string name="navigation_drawer_close">Close side bar</string>

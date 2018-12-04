@@ -17,7 +17,7 @@ public class MyMovie implements Serializable {
     private String releaseDate = "2018";
     private String posterPath = "Default";
     private int imdbID = 0;
-    private int imdbRating= 0;
+    private int imdbRating = 0;
     private int imdbVotes = 0;
     private String Title = "Default";
     private String Plot = "The default value was assigned on December 3rd 2018, prior to that date, it did not exist. What will happen?";
