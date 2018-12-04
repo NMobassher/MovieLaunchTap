@@ -21,7 +21,7 @@
     <string name="drawer_movies">Top Movies</string>
     <string name="drawer_search">Search for movie</string>
     <string name="drawer_comics">Comics</string>
-    <string name="drawer_music">Music</string>
+    <string name="drawer_list">To Watch List</string>
 
     <!-- Strings for left side navigation drawer, second group -->
 

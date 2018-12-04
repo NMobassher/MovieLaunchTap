@@ -54,6 +54,11 @@ import retrofit2.Callback;
 
 public class MovieActivity extends AppCompatActivity {
 
+
+    /* */
+
+    public static String globalList = "To watch: \n ";
+
     /* Fields */
 
 
@@ -141,6 +146,8 @@ public class MovieActivity extends AppCompatActivity {
                     data.setTitle(movies.get(i).getTitle());
                     data.setSubtitle(movies.get(i).getReleaseDate());
                     data.setDebugPath(movies.get(i).getPosterPath());
+                    globalList.concat(movies.get(i).getTitle() + "\n");
+
                     try {
 
 

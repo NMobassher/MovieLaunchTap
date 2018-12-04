@@ -28,9 +28,9 @@
             android:title="@string/drawer_comics" />
 
         <item
-            android:id="@+id/nav_music"
+            android:id="@+id/nav_list"
             android:icon="@drawable/ic_pages"
-            android:title="@string/drawer_music" />
+            android:title="@string/drawer_list" />
 
     </group>
 

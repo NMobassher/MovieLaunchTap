@@ -12,6 +12,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -21,6 +24,7 @@ public class HomeActivity extends AppCompatActivity {
     private Toolbar toolbar;
     public DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    public static TextView globalList;
 
     /* */
 
@@ -28,6 +32,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        globalList = (TextView) findViewById(R.id.watchList);
+
+
 
         /* Instantiate variables*/
 
@@ -76,9 +83,10 @@ public class HomeActivity extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 HomeActivity.this.startActivity(intent);
                 break;
-            case R.id.nav_music:
-                // TODO: Refactor MapFragment into something like latlongFragment
-                //  fragment = mapFragment;
+            case R.id.nav_list:
+                intent = new Intent(HomeActivity.this, ListActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                HomeActivity.this.startActivity(intent);
                 break;
 
             default:

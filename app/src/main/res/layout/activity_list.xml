@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ListActivity">
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/app_name">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='Welcome! Here is your "To Watch List"'
+            android:layout_gravity="top|center_horizontal"
+            />
+
+        <TextView
+            android:id="@+id/watchList"
+            android:layout_width="161dp"
+            android:layout_height="379dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:text="TextView" />
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>
