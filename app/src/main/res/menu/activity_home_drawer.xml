@@ -18,9 +18,9 @@
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/drawer_movies" />
         <item
-            android:id="@+id/nav_books"
+            android:id="@+id/nav_search"
             android:icon="@drawable/ic_pages"
-            android:title="@string/drawer_books" />
+            android:title="@string/drawer_search" />
 
         <item
             android:id="@+id/nav_comics"

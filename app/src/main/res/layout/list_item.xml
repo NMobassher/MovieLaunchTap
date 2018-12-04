@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/itemImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:contentDescription="image"
+        android:layout_gravity="top|right"
+         />
+
+    <TextView
+        android:id="@+id/itemTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:layout_gravity="top|left"
+        />
+
+    <TextView
+        android:id="@+id/itemSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:textColor="#000000"
+        android:textSize="12sp" />
+    <TextView
+        android:id="@+id/itemPath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:textColor="#000000"
+        android:textSize="12sp" />
+
+</FrameLayout>

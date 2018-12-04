@@ -71,8 +71,10 @@ public class HomeActivity extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 HomeActivity.this.startActivity(intent);
                 break;
-            case R.id.nav_books:
-                // TODO
+            case R.id.nav_search:
+                intent = new Intent(HomeActivity.this, SearchActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                HomeActivity.this.startActivity(intent);
                 break;
             case R.id.nav_music:
                 // TODO: Refactor MapFragment into something like latlongFragment

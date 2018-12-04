@@ -3,6 +3,8 @@ package uoit.ca.movieapp;
 import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +30,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,12 +63,18 @@ public class MovieActivity extends AppCompatActivity {
     public static String year;
     SimpleCursorAdapter mAdapter;
 
+
     //static final String[] PROJECTION = new String[] {title, year};
 
+
+    ListView list;
+    List<ListData> listData;
 
     String popularMoviesURL;
     ProgressBar mProgressBar;
     ArrayList<MyMovie> myMovieList;
+    ListData data;
+    List<Movie> movies;
 
 
     ArrayList<MyMovie> mPopularList;
@@ -76,7 +86,7 @@ public class MovieActivity extends AppCompatActivity {
 
     public List<Movie> films;
     public Context context;
-    List<Movie> movies;
+
     /* URL of website data is from*/
     ArrayList<String> listItems = new ArrayList<String>();
     ArrayAdapter<String> adapter;
@@ -86,6 +96,10 @@ public class MovieActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
+
+        listData = new ArrayList<ListData>();
+
+
         listView = (ListView) findViewById(R.id.listView);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItems);
         listView.setAdapter(adapter);
@@ -116,14 +130,49 @@ public class MovieActivity extends AppCompatActivity {
         call.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, retrofit2.Response<MovieResponse> response) {
-                List<Movie> movies = response.body().getResults();
+                movies = response.body().getResults();
 
-                Toast.makeText(getApplicationContext(), "Got data", Toast.LENGTH_LONG).show();
+               // Toast.makeText(getApplicationContext(), "Got data", Toast.LENGTH_LONG).show();
 
                 for (int i = 0; i < movies.size(); i++) {
-                    listItems.add(movies.get(i).getTitle());
+
+
+                    data = new ListData();
+                    data.setTitle(movies.get(i).getTitle());
+                    data.setSubtitle(movies.get(i).getReleaseDate());
+                    data.setDebugPath(movies.get(i).getPosterPath());
+                    try {
+
+
+                        String url = "https://image.tmdb.org/t/p/w92";
+                        String meme = movies.get(i).getPosterPath();
+                        url.concat(meme);
+                        URL address = new URL(url);
+
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+
+
+
+                    listData.add(data);
+
+
+
+
+
+                    //listItems.add(info);
                 }
-                adapter.notifyDataSetChanged();
+              //  adapter.notifyDataSetChanged();
+                Context context = getApplicationContext();
+                list = (ListView)findViewById(R.id.listView);
+                ListAdapter adapter = new ListAdapter(context, listData);
+                list.setAdapter(adapter);
+
 
             }
 
@@ -132,6 +181,7 @@ public class MovieActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Serious Issue", Toast.LENGTH_LONG).show();
             }
         });
+
 
 
         /* UI display code*/
